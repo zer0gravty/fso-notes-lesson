@@ -7,7 +7,7 @@ const MONGODB_PASSWORD = process.env.MONGODB_PASSWORD;
 const MONGODB_URI = process.env.MONGODB_URI;
 const url = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_URI}/${DB_NAME}?retryWrites=true&w=majority`;
 
-console.log(`Connecting to ${URL}...`);
+console.log(`Authenticating with MongoDB...`);
 
 mongoose.connect(url, {
     useNewUrlParser: true,
@@ -16,7 +16,7 @@ mongoose.connect(url, {
     useFindAndModify: false,
 })
 .then(result => {
-    console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB.');
 })
 .catch((error) => {
     console.log(`Error connecting to MongoDB:\n\t${error}`);
