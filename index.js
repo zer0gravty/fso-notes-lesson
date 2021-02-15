@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 const requestLogger = (request, response, next) => {
-    console.log(`${request.method} - ${request.path} - ${request.body}\n---`);
+    console.log(`${request.method} - ${request.path} -`, request.body);
     next();
 }
 app.use(requestLogger);
@@ -54,7 +54,7 @@ app.post('/api/notes', (request, response) => {
     note.save().then(savedNote => response.json(savedNote));
 });
 
-app.delete('/api/notes/:id', (request, response) => {
+app.delete('/api/notes/:id', (request, response, next) => {
     Note.findByIdAndRemove(request.params.id)
         .then(result => {
             response.status(204).end();
@@ -72,7 +72,7 @@ app.put('/api/notes/:id', (request, response, next) => {
 
     Note.findByIdAndUpdate(request.params.id, note, { new: true })
         .then(updatedNote => {
-            response.json(updateNote);
+            response.json(updatedNote);
         })
         .catch(error => next(error));
 });
@@ -81,7 +81,7 @@ app.put('/api/notes/:id', (request, response, next) => {
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' });
 }
-app.request(unknownEndpoint);
+app.use(unknownEndpoint);
 
 const errorHandler = (error, request, response, next) => {
     console.error(error.message);
