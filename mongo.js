@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 if (process.argv.length < 3) {
-    console.log('Please provide the password as an argument: node mongo.js <password>');
-    process.exit(1);
+  console.log('Please provide the password as an argument: node mongo.js <password>');
+  process.exit(1);
 }
 
 const USER = '';
@@ -13,24 +13,24 @@ const MONGODB_URI = '';
 const url = `mongodb+srv://${USER}:${PASSWORD}@${MONGODB_URI}/${DB_NAME}?retryWrites=true&w=majority`;
 
 mongoose.connect(url,
-    { useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true
-    });
+  { useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  });
 
 const noteSchema = new mongoose.Schema({
-    content: String,
-    date: Date,
-    important: Boolean,
+  content: String,
+  date: Date,
+  important: Boolean,
 });
 
 const Note = mongoose.model('Note', noteSchema);
 
 const note = new Note({
-    content: 'HTML is Easy',
-    date: new Date(),
-    important: true,
+  content: 'HTML is Easy',
+  date: new Date(),
+  important: true,
 });
 
 // note.save().then(result => {
@@ -39,8 +39,8 @@ const note = new Note({
 // });
 
 Note.find({}).then(result => {
-    result.forEach(note => {
-        console.log(note);
-    });
-    mongoose.connection.close();
+  result.forEach(note => {
+    console.log(note);
+  });
+  mongoose.connection.close();
 });
