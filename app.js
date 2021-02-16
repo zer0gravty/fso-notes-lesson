@@ -11,14 +11,14 @@ const app = express();
 
 logger.info('Authenticating with MongoDB...');
 mongoose
-.connect(config.MONGODB_URL, {
+  .connect(config.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true,
-})
-.then(() => logger.info('Database connection successful.'))
-.catch(error => logger.error('Error connecting to MongoDB:\n', error.message));
+  })
+  .then(() => logger.info('Database connection successful.'))
+  .catch(error => logger.error('Error connecting to MongoDB:\n', error.message));
 
 app.use(cors());
 app.use(express.static('build'));
